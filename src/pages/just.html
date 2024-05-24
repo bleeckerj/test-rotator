@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randomize Words</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <style>
+        body {
+  font-size: 6rem;
+  font-family: sans-serif;
+}
+.rotator {
+	position: relative;
+	vertical-align: text-bottom;
+	margin-left: 1rem;
+
+	& > span {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+}
+    </style>
+<link rel="stylesheet" href="../../styles/bundle.css">
+<link rel="stylesheet" href="../../styles/fonts.css">
+
+</head>
+<body>
+    <span style="font-family: Newake; font-size: 1em" class="text-green-400">Never of...</span>
+    <span style="font-family: Newake; font-size: 1em" class="rotator text-green-400"></span>
+    <style>
+        .rotator {
+	position: relative;
+	vertical-align: text-bottom;
+	margin-left: 1rem;
+    white-space: nowrap; /* Prevents breaking words onto new lines */
+    @apply text-green-400;
+	& > span {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const words = [
+                "food", "money", "Hollywood", "vacation", "sports", "work", "jobs", "creativity",
+                "retail", "sport", "education", "breakfast", "communication", "war", "organization",
+                "family", "domesticity", "government", "judiciary", "community", "cities", "farms",
+                "water", "tools", "transportation", "marriage", "dating", "intelligence", "learning",
+                "facts", "truth", "healthcare", "technology", "science", "religion", "music", "art",
+                "literature", "politics", "philosophy", "environment", "energy", "fashion", "media",
+                "fitness", "social media", "tourism", "law", "architecture", "innovation", "finance",
+                "investment", "entrepreneurship", "manufacturing", "construction", "real estate",
+                "marketing", "advertising", "journalism", "publishing", "design", "research", "charity",
+                "volunteering", "diplomacy", "ethics", "culture", "history", "philanthropy", "gaming",
+                "entertainment", "agriculture", "hospitality", "nutrition", "wellness", "psychology",
+                "sociology", "cosmetics", "spirituality", "biotechnology", "robotics", "shipping",
+                "banking", "retirement", "investing", "cookware", "coffee", "restaurants", "insurance",
+                "e-commerce", "logistics", "telecommunications", "automotive", "pharmaceuticals",
+                "aerospace", "defense", "fisheries", "forestry", "mining", "petroleum", "consulting",
+                "venture capital", "existence", "death", "meditation", "mediation", "prayer", "cults",
+                "belief", "faith", "morality", "consciousness", "mindfulness", "afterlife", "soul",
+                "wisdom", "meaning", "nirvana", "enlightenment", "karma", "destiny", "fate", "inner peace",
+                "self-awareness", "transcendence", "cleaning", "shopping", "waking up", "lounging",
+                "entertaining", "dinner parties", "school lunch", "cooking dinner", "raising children",
+                "pets", "furniture", "eating", "walking", "jogging", "working out", "water", "gardening",
+                "laundry", "bathing", "grocery shopping", "reading", "sleeping", "commuting", "baking",
+                "watching TV"
+            ];
+
+            // Shuffle function using Fisher-Yates algorithm
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+
+            // Shuffle words
+            shuffleArray(words);
+
+            // Generate HTML for words
+            const wordContainer = document.querySelector('.rotator');
+            words.forEach(word => {
+                const span = document.createElement('span');
+                span.textContent = word;
+                wordContainer.appendChild(span);
+            });
+
+            // GSAP animation
+            let main = gsap.timeline({ repeat: -1 });
+
+            const spanElements = wordContainer.querySelectorAll('span');
+            for (let i = 0; i < spanElements.length; i++) {
+                let delay = i * 3.0; // Adjust the delay to allow for proper sequencing
+                let wordTL = gsap.timeline();
+
+                if (i !== 0) {
+                    wordTL.from(spanElements[i], { duration: 0.5, yPercent: -100, opacity: 0, ease: 'elastic.out' });
+                } else {
+                    gsap.set(spanElements[0], { opacity: 1, yPercent: 0 });
+                }
+
+                if (i !== spanElements.length - 1) {
+                    wordTL.to(spanElements[i], { duration: 0.5, yPercent: 100, opacity: 0, ease: 'elastic.in', delay: 2 }); // Adding delay for pause and overlap
+                }
+
+                main.add(wordTL, delay);
+            }
+        });
+    </script>
+</body>
+</html>
