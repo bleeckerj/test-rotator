@@ -1,0 +1,19 @@
+/* src/components/TextRotator.css */
+body {
+    font-size: 6rem;
+    font-family: sans-serif;
+  }
+  
+  .rotator {
+    position: relative;
+    vertical-align: text-bottom;
+    margin-left: 1rem;
+    white-space: nowrap; /* Prevents breaking words onto new lines */
+  }
+  
+  .rotator > span {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
